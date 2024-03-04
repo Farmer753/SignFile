@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph_splash"
+    app:startDestination="@id/fragment_test">
+
+    <fragment
+        android:id="@+id/fragment_test"
+        android:name="ru.ll.sign.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
+
+    <action
+        android:id="@+id/action_open_dialog"
+        app:destination="@id/fragment_dialog" />
+
+    <dialog
+        android:id="@+id/fragment_dialog"
+        android:name="ru.ll.sign.Dialog"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" />
+
+</navigation>
