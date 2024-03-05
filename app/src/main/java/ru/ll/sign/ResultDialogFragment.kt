@@ -1,6 +1,7 @@
 package ru.ll.sign
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,17 @@ class ResultDialogFragment : DialogFragment() {
     var _binding: FragmentDialogBinding? = null
     val binding: FragmentDialogBinding
         get() = _binding!!
+
+    override fun onStart() {
+        super.onStart()
+
+        dialog?.window?.apply {
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setBackgroundDrawableResource(android.R.color.transparent)
+//            setWindowAnimations(R.style.DialogAnimation)
+            setGravity(Gravity.BOTTOM)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
