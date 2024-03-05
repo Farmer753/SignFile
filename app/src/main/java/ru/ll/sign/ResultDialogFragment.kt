@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import ru.ll.sign.databinding.FragmentDialogBinding
 
 
-class Dialog : DialogFragment() {
+class ResultDialogFragment : DialogFragment() {
 
     private val filePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -35,7 +35,7 @@ class Dialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textView.setOnClickListener {
+        binding.main.setOnClickListener {
             filePicker.launch("*/*");
         }
     }

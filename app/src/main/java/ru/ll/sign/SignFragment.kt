@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import ru.ll.sign.databinding.FragmentTestBinding
+import ru.ll.sign.databinding.FragmentSignBinding
 
-class TestFragment : Fragment() {
+class SignFragment : Fragment() {
 
-    var _binding: FragmentTestBinding? = null
-    val binding: FragmentTestBinding
+    var _binding: FragmentSignBinding? = null
+    val binding: FragmentSignBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +19,7 @@ class TestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTestBinding.inflate(inflater, container, false)
+        _binding = FragmentSignBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -31,7 +31,7 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textView.setOnClickListener {
+        binding.signButton.setOnClickListener {
             findNavController().navigate(R.id.action_open_dialog)
         }
     }
