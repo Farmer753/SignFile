@@ -1,14 +1,17 @@
-package ru.ll.sign
+package ru.ll.sign.ui.sign
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import ru.ll.sign.databinding.FragmentSignBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class SignFragment : Fragment() {
+
+    val viewModel: SignViewModel by viewModel()
 
     var _binding: FragmentSignBinding? = null
     val binding: FragmentSignBinding
@@ -32,7 +35,7 @@ class SignFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.signButton.setOnClickListener {
-            findNavController().navigate(R.id.action_open_dialog)
+            viewModel.onSignClick()
         }
     }
 }

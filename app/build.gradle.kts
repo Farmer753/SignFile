@@ -45,4 +45,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    //Logging
+    implementation(libs.timber)
+    //Di
+    implementation(libs.koin)
 }

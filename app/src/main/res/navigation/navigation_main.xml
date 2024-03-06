@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_test"
-        android:name="ru.ll.sign.SignFragment"
+        android:name="ru.ll.sign.ui.sign.SignFragment"
         android:label="fragment_test"
         tools:layout="@layout/fragment_sign" />
 
@@ -17,7 +17,7 @@
 
     <dialog
         android:id="@+id/fragment_dialog"
-        android:name="ru.ll.sign.ResultDialogFragment"
+        android:name="ru.ll.sign.ui.resultDialog.ResultDialogFragment"
         android:label="fragment_dialog"
         tools:layout="@layout/fragment_dialog" />
 
