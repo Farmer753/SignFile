@@ -4,19 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.DialogFragment
-import ru.ll.sign.databinding.FragmentDialogBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import ru.ll.sign.databinding.FragmentSignBinding
 
+class SignFragment : Fragment() {
 
-class Dialog : DialogFragment() {
-
-    private val filePicker = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri -> println("uri: $uri") }
-
-    var _binding: FragmentDialogBinding? = null
-    val binding: FragmentDialogBinding
+    var _binding: FragmentSignBinding? = null
+    val binding: FragmentSignBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -24,7 +19,7 @@ class Dialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDialogBinding.inflate(inflater, container, false)
+        _binding = FragmentSignBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,8 +30,9 @@ class Dialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textView.setOnClickListener {
-            filePicker.launch("*/*");
+
+        binding.signButton.setOnClickListener {
+            findNavController().navigate(R.id.action_open_dialog)
         }
     }
 }
