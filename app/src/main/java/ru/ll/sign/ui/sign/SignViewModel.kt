@@ -15,6 +15,8 @@ class SignViewModel : ViewModel() {
         Timber.d("SignViewModel")
     }
 
+    var fileToSign: ByteArray? = null
+
     fun onSignClick() {
         Timber.d("onSignClick")
         //        val keygen = KeyGenerator.getInstance("AES")
@@ -49,20 +51,18 @@ class SignViewModel : ViewModel() {
         val entry: KeyStore.Entry = ks.getEntry("test", null)
         println("entry ${(entry as KeyStore.PrivateKeyEntry).privateKey.algorithm}")
 
-        val data: ByteArray = "ByteArray".toByteArray()
-
         val signature: ByteArray = Signature.getInstance("SHA256withECDSA").run {
             initSign(entry.privateKey)
-            update(data)
+            update(fileToSign)
             sign()
         }
 
-        Timber.d("data $data")
+        Timber.d("fileToSign $fileToSign")
         Timber.d("signature $signature")
 
         val valid: Boolean = Signature.getInstance("SHA256withECDSA").run {
             initVerify(entry.certificate)
-            update(data)
+            update(fileToSign)
             verify(signature)
         }
 
@@ -77,5 +77,9 @@ class SignViewModel : ViewModel() {
         }
 
         Timber.d("valid1 $valid1")
+    }
+
+    fun onFileToSignChoosen(fileToSign: ByteArray) {
+        this.fileToSign = fileToSign
     }
 }
