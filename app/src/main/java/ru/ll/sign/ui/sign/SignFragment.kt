@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.ll.sign.R
 import ru.ll.sign.databinding.FragmentSignBinding
+import ru.ll.sign.util.getOriginalFileName
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -29,9 +31,12 @@ class SignFragment : Fragment() {
     private val filePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        println("uri: $uri")
+        Timber.d("uri: $uri")
+        val fileNameFromUri = uri?.getOriginalFileName(requireContext())
+        Timber.d("fileNameFromUri $fileNameFromUri")
+        viewModel.onFileToSignNameReceived(fileNameFromUri!!)
         val inputStream: InputStream =
-            requireContext().getContentResolver().openInputStream(uri!!)!!
+            requireContext().getContentResolver().openInputStream(uri)!!
 
 //        val content = inputStream.bufferedReader().use(BufferedReader::readText)
         val fileToSign = inputStream.readBytes()
@@ -79,7 +84,17 @@ class SignFragment : Fragment() {
                 .filterNotNull()
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect {
-                    fileCreator.launch("signature")
+                    fileCreator.launch("${viewModel.fileToSignName.value}.signature")
+                }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.fileToSignName
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    binding.fileNameTextView.text = getString(
+                        R.string.chosen_file_label,
+                        it ?: getString(R.string.not_chosen)
+                    )
                 }
         }
     }

@@ -5,6 +5,8 @@ import android.security.keystore.KeyProperties
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -24,6 +26,9 @@ class SignViewModel : ViewModel() {
 
 //    private val _signatureBytes: MutableStateFlow<ByteArray?> = MutableStateFlow(null)
 //    val signatureBytes: StateFlow<ByteArray?> = _signatureBytes
+
+    private val _fileToSignName: MutableStateFlow<String?> = MutableStateFlow(null)
+    val fileToSignName: StateFlow<String?> = _fileToSignName
 
     private val _signatureBytes = Channel<ByteArray?>(Channel.BUFFERED)
     val signatureBytes = _signatureBytes.receiveAsFlow()
@@ -95,5 +100,9 @@ class SignViewModel : ViewModel() {
 
     fun onFileToSignChoosen(fileToSign: ByteArray) {
         this.fileToSign = fileToSign
+    }
+
+    fun onFileToSignNameReceived(fileName: String) {
+        viewModelScope.launch { _fileToSignName.emit(fileName) }
     }
 }
