@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -95,6 +97,32 @@ class SignFragment : Fragment() {
                         R.string.chosen_file_label,
                         it ?: getString(R.string.not_chosen)
                     )
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventsFlow
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { event ->
+                    when (event) {
+//                        is CoffeeAllViewModel.Event.CloseScreen -> {
+//                            findNavController().popBackStack()
+//                        }
+//                        is CoffeeAllViewModel.Event.NavigateToCoffee -> {
+//                            findNavController().navigate(
+//                                R.id.action_coffee_all_to_coffee,
+//                                bundleOf(
+//                                    CoffeeFragment.ARG_COFFEESHOP to event.coffeeShop
+//                                )
+//                            )
+//                        }
+                        is SignViewModel.Event.SignError -> {
+                            Toast.makeText(requireContext(),event.errorMessage,Toast.LENGTH_SHORT).show()
+                        }
+                        SignViewModel.Event.SignSuccess -> {
+                            TODO()
+                        }
+                    }
                 }
         }
     }

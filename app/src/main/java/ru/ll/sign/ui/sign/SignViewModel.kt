@@ -24,8 +24,13 @@ class SignViewModel : ViewModel() {
     var fileToSign: ByteArray? = null
     var signature: ByteArray? = null
 
-//    private val _signatureBytes: MutableStateFlow<ByteArray?> = MutableStateFlow(null)
-//    val signatureBytes: StateFlow<ByteArray?> = _signatureBytes
+    sealed class Event {
+        data object SignSuccess : Event()
+        data class SignError(val errorMessage: String) : Event()
+    }
+
+    private val eventChannel = Channel<Event>(Channel.BUFFERED)
+    val eventsFlow = eventChannel.receiveAsFlow()
 
     private val _fileToSignName: MutableStateFlow<String?> = MutableStateFlow(null)
     val fileToSignName: StateFlow<String?> = _fileToSignName
@@ -34,11 +39,12 @@ class SignViewModel : ViewModel() {
     val signatureBytes = _signatureBytes.receiveAsFlow()
     fun onSignClick() {
         Timber.d("onSignClick")
-        //        val keygen = KeyGenerator.getInstance("AES")
-//        keygen.init(256)
-//        val key: SecretKey = keygen.generateKey()
-//        key.
         viewModelScope.launch {
+            if (fileToSignName.value == null) {
+                eventChannel.send(Event.SignError("Файл для подписи не выбран"))
+                return@launch
+            }
+
             val kpg: KeyPairGenerator = KeyPairGenerator.getInstance(
                 KeyProperties.KEY_ALGORITHM_EC,
                 "AndroidKeyStore"
