@@ -1,8 +1,8 @@
 package ru.ll.sign
 
 import android.app.Application;
-import com.example.gameapplication.ui.di.applicationModule
-import com.example.gameapplication.ui.di.domainModule
+import ru.ll.sign.di.applicationModule
+import ru.ll.sign.di.domainModule
 import org.koin.core.context.GlobalContext.startKoin
 import timber.log.Timber
 
