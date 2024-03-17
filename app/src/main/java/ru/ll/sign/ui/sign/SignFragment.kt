@@ -97,7 +97,9 @@ class SignFragment : Fragment() {
 
         binding.passwordEditText.addTextChangedListener { viewModel.onPasswordEntered(it.toString()) }
         binding.passwordEditText.setOnEditorActionListener { v, action, _ ->
-            if (action == EditorInfo.IME_ACTION_DONE || action == EditorInfo.IME_ACTION_NEXT || action == EditorInfo.IME_ACTION_UNSPECIFIED) {
+            if (action == EditorInfo.IME_ACTION_DONE || action
+                == EditorInfo.IME_ACTION_NEXT || action == EditorInfo.IME_ACTION_UNSPECIFIED
+            ) {
                 //hide the keyboard
                 val imm =
                     requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

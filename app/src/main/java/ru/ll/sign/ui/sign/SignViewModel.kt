@@ -23,6 +23,7 @@ class SignViewModel : ViewModel() {
 
     companion object {
         const val ALIAS = "test"
+        const val ANDROID_KEY_STORE="AndroidKeyStore"
     }
 
     private var fileToSign: ByteArray? = null
@@ -112,7 +113,7 @@ class SignViewModel : ViewModel() {
     fun generateKeys() {
         val kpg: KeyPairGenerator = KeyPairGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_EC,
-            "AndroidKeyStore"
+            ANDROID_KEY_STORE
         )
         val parameterSpec: KeyGenParameterSpec = KeyGenParameterSpec.Builder(
             ALIAS,
@@ -131,7 +132,7 @@ class SignViewModel : ViewModel() {
     }
 
     private fun getKeys(): KeyStore.PrivateKeyEntry? {
-        val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
+        val ks: KeyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
         val aliases: Enumeration<String> = ks.aliases()
@@ -143,7 +144,7 @@ class SignViewModel : ViewModel() {
     }
 
     fun deleteKeys() {
-        val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
+        val ks: KeyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
         ks.deleteEntry(ALIAS)
