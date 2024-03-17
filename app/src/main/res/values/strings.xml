@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SignFile</string>
+    <string name="not_chosen">Not chosen</string>
+    <string name="chosen_file_label">Chosen file: %s</string>
 </resources>

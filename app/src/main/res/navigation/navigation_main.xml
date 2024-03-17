@@ -7,18 +7,28 @@
 
     <fragment
         android:id="@+id/fragment_test"
-        android:name="ru.ll.sign.SignFragment"
+        android:name="ru.ll.sign.ui.sign.SignFragment"
         android:label="fragment_test"
         tools:layout="@layout/fragment_sign" />
 
     <action
         android:id="@+id/action_open_dialog"
-        app:destination="@id/fragment_dialog" />
+        app:destination="@id/fragment_dialog">
+        <argument
+            android:name="ARG_ERROR_MESSAGE"
+            app:argType="string"
+            app:nullable="true" />
+    </action>
 
     <dialog
         android:id="@+id/fragment_dialog"
-        android:name="ru.ll.sign.ResultDialogFragment"
+        android:name="ru.ll.sign.ui.resultDialog.ResultDialogFragment"
         android:label="fragment_dialog"
-        tools:layout="@layout/fragment_dialog" />
+        tools:layout="@layout/fragment_dialog">
+        <argument
+            android:name="ARG_ERROR_MESSAGE"
+            app:argType="string"
+            app:nullable="true" />
+    </dialog>
 
 </navigation>

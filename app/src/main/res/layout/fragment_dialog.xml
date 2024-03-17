@@ -18,22 +18,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Документ успешно подписан"
-            app:layout_constraintBottom_toTopOf="@+id/errorTextView"
+            tools:text="Документ успешно подписан"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/errorTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Текст ошибки"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

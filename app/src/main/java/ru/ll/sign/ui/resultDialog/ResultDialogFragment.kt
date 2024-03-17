@@ -1,23 +1,19 @@
-package ru.ll.sign
+package ru.ll.sign.ui.resultDialog
 
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import ru.ll.sign.databinding.FragmentDialogBinding
+import ru.ll.sign.ui.sign.SignFragment.Companion.ARG_ERROR_MESSAGE
 
 
 class ResultDialogFragment : DialogFragment() {
 
-    private val filePicker = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri -> println("uri: $uri") }
-
-    var _binding: FragmentDialogBinding? = null
-    val binding: FragmentDialogBinding
+    private var _binding: FragmentDialogBinding? = null
+   private val binding: FragmentDialogBinding
         get() = _binding!!
 
     override fun onStart() {
@@ -26,7 +22,6 @@ class ResultDialogFragment : DialogFragment() {
         dialog?.window?.apply {
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             setBackgroundDrawableResource(android.R.color.transparent)
-//            setWindowAnimations(R.style.DialogAnimation)
             setGravity(Gravity.BOTTOM)
         }
     }
@@ -40,15 +35,14 @@ class ResultDialogFragment : DialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val errorMessage = requireArguments().getString(ARG_ERROR_MESSAGE)
+        binding.resultTextView.text = errorMessage ?: "Файл успешно подписан"
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.main.setOnClickListener {
-            filePicker.launch("*/*");
-        }
     }
 }
